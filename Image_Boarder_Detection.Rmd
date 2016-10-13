@@ -1,0 +1,358 @@
+---
+title: "Image Boarder Detection"
+author: "Kathy. Chenying. Gao"
+date: "October 13, 2016"
+output: pdf_document
+---
+```{r include=FALSE, cache=FALSE}
+library(nnet)
+library(tictoc)
+library(devtools)
+library(lattice)
+library(plotly)
+library(chorddiag)
+library(Hmisc)
+library(R.matlab)
+library(vegan)
+library(circlize)
+library(circular)
+library(base)
+library(scatterplot3d)
+library(ResourceSelection)
+library(NeuralNetTools)
+library(car)
+library(nnet)
+library(NeuralNetTools)
+library(RSNNS)
+library(corrplot)
+library(smacof)
+library(klaR)
+library(MASS)
+library(CCA)
+library(CCP)
+library(GGally)
+library(reshape2)
+library(ggplot2)
+library(MVN)
+library(raster)
+library(mvnormtest)
+library(mclust)
+library(vcd)
+library(cluster)
+library(rpart)
+library(Hmisc)
+library(foreign)
+library(neuralnet)
+library(fpc)
+library(MTS)
+library(plotly)
+library(devtools)
+library(Rcpp)
+library(ggvis)
+library(googleVis)
+library(rCharts)
+library(plotly)
+library(dplyr)
+library(grDevices)
+library(bitops)
+library(tidyr)
+library(knitr)
+library(randomForest)
+library(polycor)
+library(e1071)
+library(nortest)
+library(jpeg)
+library(neuralnet)
+library(jpeg)
+library(pracma)
+library(utils)
+library(plotrix)
+library(ada)
+library(e1071)
+library(klaR)
+library(mda)
+library(kernlab)
+```
+
+This is an R Markdown Image Boarder Detection Example
+
+# Github Logo
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/github.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.95)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "Github Logo")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+# LinkedIn Logo
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/linkedin.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.92)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "LinkedIn Logo")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+# Pepe The Frog
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/frog.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.95)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "Pepe the Frog")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+# Rose
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/rose.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.9)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "Rose")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+# My Desktop
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/mydesktop.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.97) 
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "My Desktop")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+
+# Why So Serious
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/whysoserious.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.95)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "Why So Serious")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
+
+# Red Panda
+```{r}
+# Load image
+matfile <- readMat("/Users/gaochenying1/Desktop/My Projects Demo/redpanda.mat")
+testimage = matfile$maskedRGBImage
+dim(testimage)
+# Let's see how it goes for a single image
+nr=dim(testimage)[1]
+nc=dim(testimage)[2]
+band=5
+N=nr*nc
+flag.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+var.mat=matrix(0,nrow = (nr-(band-1)),ncol = (nc-(band-1)))
+# Calculate Variance of Neighbours
+for (i in 3:(nr-(band-1)/2))
+{
+ for (j in 3:(nc-(band-1)/2))
+ {
+   tempmat1=testimage[(i-2):(i+2),(j-2):(j+2),1]
+   tempvar1=sum((tempmat1-mean(tempmat1))^2)/(band^2)
+   # tempflag=ifelse(tempvar>)
+   var.mat[i-(band-1)/2,j-(band-1)/2]=tempvar1
+ }
+}
+hist(as.numeric(var.mat), col = "#81D8D0") # Adjust Threshold according to this
+# Flag the large variance element and call them borders
+thershold=quantile(var.mat,0.95)
+for (i in 1:(nr-(band-1)))
+{
+ for (j in 1:(nc-(band-1)))
+ {
+   tempflag=ifelse(var.mat[i,j]>thershold,1,0)
+   flag.mat[i,j]=tempflag
+ }
+}
+flag.rt = t(apply(flag.mat, 2, rev))
+image(flag.rt,col=c("black", "#9de3e1"), main = "Red Panda")
+remove(list=c("testimage", "matfile", "flag.mat", "var.mat"))
+```
